@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ObatController;
+use App\Http\Controllers\API\PasienController;
+use App\Http\Controllers\API\PegawaiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::resources([
     'auth' => AuthController::class,
-    'obat' => ObatController::class
+    'obat' => ObatController::class,
+    'pasien' => PasienController::class,
+    'pegawai' => PegawaiController::class
 ]);
