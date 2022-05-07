@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DokterController;
+use App\Http\Controllers\API\JadwalDokterController;
 use App\Http\Controllers\API\ObatController;
 use App\Http\Controllers\API\PasienController;
 use App\Http\Controllers\API\PegawaiController;
 use App\Http\Controllers\API\PoliController;
+use App\Models\JadwalDokter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +31,6 @@ Route::resources([
     'pasien' => PasienController::class,
     'pegawai' => PegawaiController::class,
     'poli' => PoliController::class,
-    'dokter' => DokterController::class
+    'dokter' => DokterController::class,
+    'jadwal_dokter' => JadwalDokterController::class
 ]);
