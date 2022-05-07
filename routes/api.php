@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DokterController;
 use App\Http\Controllers\API\ObatController;
 use App\Http\Controllers\API\PasienController;
 use App\Http\Controllers\API\PegawaiController;
@@ -27,5 +28,6 @@ Route::resources([
     'obat' => ObatController::class,
     'pasien' => PasienController::class,
     'pegawai' => PegawaiController::class,
-    'poli' => PoliController::class
+    'poli' => PoliController::class,
+    'dokter' => DokterController::class
 ]);

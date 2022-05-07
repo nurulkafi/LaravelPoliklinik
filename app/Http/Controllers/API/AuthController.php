@@ -28,22 +28,30 @@ class AuthController extends Controller
         $password = $request->password;
         $role = $request->role;
 
-        $saved = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt($password)
-        ]);
+        $emailChecked = $this->emailChecked($email);
+        if ($emailChecked == null) {
+            $saved = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt($password)
+            ]);
 
-        if ($saved) {
-            $saved->assignRole($role);
-            return response()->json([
-                'success' => true,
-                'message' => 'User Berhasil Disimpan!',
-            ], 200);
-        } else {
-            return response()->json([
+            if ($saved) {
+                $saved->assignRole($role);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User Berhasil Disimpan!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User Gagal Disimpan!',
+                ], 401);
+            }
+        }else{
+            return response([
                 'success' => false,
-                'message' => 'User Gagal Disimpan!',
+                'message' => 'Email Sudah Dipakai'
             ], 401);
         }
     }
@@ -80,23 +88,37 @@ class AuthController extends Controller
         $password = $request->password;
         $role = $request->role;
 
-        $saved = $user->update([
-            'name' => $name,
+        $array = [
+            'name' =>$name,
             'email' => $email,
             'password' => bcrypt($password)
-        ]);
-        if ($saved) {
-            DB::table('model_has_roles')->where('model_id', $id)->delete();
-            $user->assignRole($role);
-            return response()->json([
-                'success' => true,
-                'message' => 'User Berhasil diubah!',
-            ], 200);
-        } else {
-            return response()->json([
+        ];
+        $emailChecked =$this->validatorDataUsers($array,$id);
+        if ($emailChecked->fails()) {
+            return response([
                 'success' => false,
-                'message' => 'User Gagal diubah!',
+                'message' => $emailChecked->errors()
             ], 401);
+        } else {
+            $saved = $user->update([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt($password)
+            ]);
+            if ($saved) {
+                DB::table('model_has_roles')->where('model_id', $id)->delete();
+                $user->assignRole($role);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User Berhasil diubah!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User Gagal diubah!',
+                ], 401);
+            }
         }
+
     }
 }

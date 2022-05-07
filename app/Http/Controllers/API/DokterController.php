@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pegawai;
+use App\Models\Dokter;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class PegawaiController extends Controller
+class DokterController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,11 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $data = Pegawai::latest()->get();
+        //
+        $data = Dokter::latest()->get();
         return response([
             'success' => true,
-            'message' => 'List Pegawai',
+            'message' => 'List Data Dokter',
             'data' => $data
         ], 200);
     }
@@ -42,11 +43,13 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        //
+        $kode_poli = $request->kode_poli;
         $nama = $request->nama;
-        $alamat = $request->alamat;
-        $noHp = $request->no_hp;
-        $tgl_lahir = $request->tgl_lahir;
         $jk = $request->jk;
+        $tgl_lahir = $request->tgl_lahir;
+        $alamat = $request->alamat;
+        $no_hp = $request->no_hp;
         $email = $request->email;
 
         $emailChecked = $this->emailChecked($email);
@@ -58,37 +61,39 @@ class PegawaiController extends Controller
             ]);
 
             if ($userSaved) {
-                // 2 adalah id role Pegawai
-                $userSaved->assignRole(2);
-                $PegawaiSaved = Pegawai::create([
+                $dokterSaved = Dokter::create([
+                    'poli_id' => $kode_poli,
+                    'user_id' => $userSaved->id,
                     'nama' => $nama,
-                    'alamat' => $alamat,
-                    'no_hp' => $noHp,
                     'jenis_kelamin' => $jk,
                     'tgl_lahir' => $tgl_lahir,
-                    'user_id' => $userSaved->id
+                    'alamat' => $alamat,
+                    'no_hp' => $no_hp
                 ]);
-
-                if ($PegawaiSaved) {
-                    return response()->json([
+                if ($dokterSaved) {
+                    return response([
                         'success' => true,
-                        'message' => 'Pegawai Berhasil Disimpan!',
+                        'message' => 'Data berhasil disimpan!'
                     ], 200);
                 } else {
-                    return response()->json([
+                    return response([
                         'success' => false,
-                        'message' => 'Pegawai Gagal Disimpan!',
+                        'message' => 'Data gagal disimpan!'
                     ], 401);
                 }
+            } else {
+                return response([
+                    'success' => false,
+                    'message' => 'Kesalahan simpan data users!'
+                ], 401);
             }
         }else{
-            return response()->json([
+            return response([
                 'success' => false,
-                'message' => 'Email Sudah Terpakai!',
+                'message' => 'Email Sudah Dipakai'
             ], 401);
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -97,17 +102,18 @@ class PegawaiController extends Controller
      */
     public function show($id)
     {
-        $data = Pegawai::whereId($id);
+        //
+        $data = Dokter::whereId($id);
         if ($data->count() > 0) {
             return response([
                 'success' => true,
-                'message' => 'Detail Pegawai',
+                'message' => 'Detail Dokter',
                 'data' => $data->first()
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Data Pegawai Tidak Ada',
+                'message' => 'Data Dokter Tidak Ada',
             ], 401);
         }
     }
@@ -132,54 +138,61 @@ class PegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Pegawai = Pegawai::findOrFail($id);
-        $user = User::findOrFail($Pegawai->user_id);
+        $dokter = Dokter::findOrFail($id);
+        $user = User::findOrFail($dokter->user_id);
         //
-        $nama = $request->nama;
-        $alamat = $request->alamat;
-        $noHp = $request->no_hp;
-        $tgl_lahir = $request->tgl_lahir;
+        $kode_poli = $request->kode_poli;
+        $name = $request->nama;
         $jk = $request->jk;
+        $tgl_lahir = $request->tgl_lahir;
+        $alamat = $request->alamat;
+        $no_hp = $request->no_hp;
         $email = $request->email;
+
         $array = [
-            'name' => $nama,
+            'name' => $name,
             'email' => $email,
             'password' => bcrypt($tgl_lahir)
         ];
-        $validate = $this->validatorDataUsers($array, $user->id);
+        $validate = $this->validatorDataUsers($array,$user->id);
+
         if($validate->fails()){
-            return response()->json([
+            return response([
                 'success' => false,
-                'message' => 'Email Sudah Dipakai!',
+                'message' => $validate->errors()
             ], 401);
         }else{
             $userSaved = $user->update([
-                'name' => $nama,
+                'name' => $name,
                 'email' => $email,
                 'password' => bcrypt($tgl_lahir)
             ]);
-
             if ($userSaved) {
-                $PegawaiSaved = $Pegawai->update([
-                    'nama' => $nama,
-                    'alamat' => $alamat,
-                    'no_hp' => $noHp,
+                $dokterSaved = $dokter->update([
+                    'poli_id' => $kode_poli,
+                    'user_id' => $user->id,
+                    'nama' => $name,
                     'jenis_kelamin' => $jk,
                     'tgl_lahir' => $tgl_lahir,
-                    'user_id' => $user->id
+                    'alamat' => $alamat,
+                    'no_hp' => $no_hp
                 ]);
-
-                if ($PegawaiSaved) {
-                    return response()->json([
+                if ($dokterSaved) {
+                    return response([
                         'success' => true,
-                        'message' => 'Pegawai Berhasil Diubah!',
+                        'message' => 'Data berhasil diupdate!'
                     ], 200);
                 } else {
-                    return response()->json([
+                    return response([
                         'success' => false,
-                        'message' => 'Pegawai Gagal Diubah!',
+                        'message' => 'Data gagal diupdate!'
                     ], 401);
                 }
+            } else {
+                return response([
+                    'success' => false,
+                    'message' => 'Kesalahan simpan data users!'
+                ], 401);
             }
         }
     }
@@ -192,20 +205,21 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $Pegawai = Pegawai::findOrFail($id);
-        $user = User::findOrFail($Pegawai->user_id);
+        //
+        $Dokter = Dokter::findOrFail($id);
+        $user = User::findOrFail($Dokter->user_id);
 
-        $Pegawai->delete();
-        if ($Pegawai) {
+        $Dokter->delete();
+        if ($Dokter) {
             $user->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'Pegawai Berhasil dihapus!',
+                'message' => 'Dokter Berhasil dihapus!',
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Pegawai Gagal dihapus!',
+                'message' => 'Dokter Gagal dihapus!',
             ], 401);
         }
     }
