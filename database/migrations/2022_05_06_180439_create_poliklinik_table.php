@@ -17,6 +17,7 @@ class CreatePoliklinikTable extends Migration
             $table->char('kode_poli',5);
             $table->string('nama');
             $table->string('deskripsi');
+            $table->string('image')->default(null);
             $table->timestamps();
 
             $table->primary('kode_poli');

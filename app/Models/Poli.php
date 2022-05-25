@@ -9,7 +9,7 @@ class Poli extends Model
 {
     use HasFactory;
     protected $table = 'poli';
-    protected $fillable =['kode_poli','nama','deskripsi'];
+    protected $fillable =['kode_poli','nama','deskripsi','image'];
     public function kodeOtomatis()
     {
         $poli = Poli::orderBy('kode_poli', 'DESC')->first();

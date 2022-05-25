@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Poli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PoliController extends Controller
 {
@@ -21,10 +22,15 @@ class PoliController extends Controller
         $nama = $request->nama;
         $deskripsi = $request->deskripsi;
 
+        $uploadFolder = 'poli';
+        $image = $request->file('image');
+        $image_uploaded_path = $image->store($uploadFolder, 'public');
+
         $saved = Poli::create([
             'kode_poli' => Poli::kodeOtomatis(),
             'nama' => $nama,
-            'deskripsi' => $deskripsi
+            'deskripsi' => $deskripsi,
+            'image' => 'storage/'. $uploadFolder . '/'  . basename($image_uploaded_path)
         ]);
         if($saved){
             return response([

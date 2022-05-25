@@ -9,6 +9,7 @@ use App\Http\Controllers\API\PasienController;
 use App\Http\Controllers\API\PegawaiController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\PoliController;
+use App\Http\Controllers\API\ResepController;
 use App\Models\JadwalDokter;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
@@ -37,5 +38,6 @@ Route::resources([
     'dokter' => DokterController::class,
     'jadwal_dokter' => JadwalDokterController::class,
     'jenis_biaya' => JenisBiayaController::class,
-    'pendaftaran' => PendaftaranController::class
+    'pendaftaran' => PendaftaranController::class,
+    'resep' => ResepController::class
 ]);
