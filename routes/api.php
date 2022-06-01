@@ -7,6 +7,7 @@ use App\Http\Controllers\API\JenisBiayaController;
 use App\Http\Controllers\API\ObatController;
 use App\Http\Controllers\API\PasienController;
 use App\Http\Controllers\API\PegawaiController;
+use App\Http\Controllers\API\PemeriksaanController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\PoliController;
 use App\Http\Controllers\API\ResepController;

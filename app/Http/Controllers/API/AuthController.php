@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -26,34 +27,50 @@ class AuthController extends Controller
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
-        $role = $request->role;
-
-        $emailChecked = $this->emailChecked($email);
-        if ($emailChecked == null) {
-            $saved = User::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => bcrypt($password)
-            ]);
-
-            if ($saved) {
-                $saved->assignRole($role);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'User Berhasil Disimpan!',
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'User Gagal Disimpan!',
-                ], 401);
-            }
-        }else{
+        $user = User::where('email',$email)->first();
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
             return response([
-                'success' => false,
-                'message' => 'Email Sudah Dipakai'
-            ], 401);
+                'success' => true,
+                'message' => 'Success',
+                'id' => $user->id
+            ], 200);
         }
+        return response([
+            'success' => false,
+            'message' => 'failed',
+        ], 200);
+        // return response([
+        //     'success' => false,
+        //     'message' => 'List Users',
+        // ], 200);
+        // $role = $request->role;
+
+        // $emailChecked = $this->emailChecked($email);
+        // if ($emailChecked == null) {
+        //     $saved = User::create([
+        //         'name' => $name,
+        //         'email' => $email,
+        //         'password' => bcrypt($password)
+        //     ]);
+
+        //     if ($saved) {
+        //         $saved->assignRole($role);
+        //         return response()->json([
+        //             'success' => true,
+        //             'message' => 'User Berhasil Disimpan!',
+        //         ], 200);
+        //     } else {
+        //         return response()->json([
+        //             'success' => false,
+        //             'message' => 'User Gagal Disimpan!',
+        //         ], 401);
+        //     }
+        // }else{
+        //     return response([
+        //         'success' => false,
+        //         'message' => 'Email Sudah Dipakai'
+        //     ], 401);
+        // }
     }
     public function show($id){
         $data = User::whereId($id)->first();
