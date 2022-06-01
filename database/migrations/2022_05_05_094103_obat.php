@@ -13,7 +13,6 @@ class Obat extends Migration
      */
     public function up()
     {
-        //
     }
 
     /**

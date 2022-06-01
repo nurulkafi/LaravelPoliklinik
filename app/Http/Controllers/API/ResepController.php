@@ -42,7 +42,7 @@ class ResepController extends Controller
             'data' => $data
         ], 200);
     }
-    
+
     public function detail($id){
         $detail = DB::table('resep')
         ->select('resep.id AS id','resep.dosis AS dosis','resep.jumlah AS jumlah','poli.nama AS poli','dokter.nama AS nama','pendaftaran.tgl_pendaftaran')
@@ -57,6 +57,24 @@ class ResepController extends Controller
             'success' => true,
             'message' => 'List Riwayat',
             'data' => $detail
+        ], 200);
+    }
+
+    public function details($id){
+        $details = DB::table('resep')
+        ->select('resep.id AS id','resep.dosis AS dosis','resep.jumlah AS jumlah','poli.nama AS poli','dokter.nama AS nama','pendaftaran.tgl_pendaftaran','obat.nama AS obat')
+        ->join('pemeriksaan','pemeriksaan.id','=','resep.pemeriksaan_id')
+        ->join('pendaftaran','pendaftaran.id','=','pemeriksaan.pendaftaran_id')
+        ->join('jadwal_dokter','jadwal_dokter.id','=','pendaftaran.jadwal_dokter_id')
+        ->join('dokter','dokter.id','=','jadwal_dokter.dokter_id')
+        ->join('poli','poli.kode_poli','=','dokter.poli_id')
+        ->join('obat','obat.id','=','resep.obat_id')
+        ->where('resep.obat_id',$id)
+        ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Riwayat',
+            'data' => $details
         ], 200);
     }
 }

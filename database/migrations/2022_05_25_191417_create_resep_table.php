@@ -18,6 +18,7 @@ class CreateResepTable extends Migration
             $table->string('dosis');
             $table->string('jumlah');
             $table->unsignedBigInteger('pemeriksaan_id');
+            $table->unsignedBigInteger('obat_id');
             $table->timestamps();
         });
     }

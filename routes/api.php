@@ -53,3 +53,7 @@ Route::get('detail_pemeriksaan/{id}',[
 Route::get('detail_resep/{id}',[
     ResepController::class,'detail'
 ]);
+
+Route::get('details_resep/{id}',[
+    ResepController::class,'details'
+]);
