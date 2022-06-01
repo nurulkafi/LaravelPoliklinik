@@ -10,8 +10,10 @@ use App\Http\Controllers\API\PegawaiController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\PoliController;
 use App\Http\Controllers\API\ResepController;
+use App\Http\Controllers\API\RiwayatPemeriksaanController;
 use App\Models\JadwalDokter;
 use App\Models\Pendaftaran;
+use App\Models\RiwayatPemeriksaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,5 +41,6 @@ Route::resources([
     'jadwal_dokter' => JadwalDokterController::class,
     'jenis_biaya' => JenisBiayaController::class,
     'pendaftaran' => PendaftaranController::class,
-    'resep' => ResepController::class
+    'resep' => ResepController::class,
+    'riwayat_pemeriksaan' => RiwayatPemeriksaanController::class
 ]);
