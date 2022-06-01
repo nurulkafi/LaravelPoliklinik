@@ -15,9 +15,9 @@ class CreateResepTable extends Migration
     {
         Schema::create('resep', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('poli');
-            $table->string('tanggal');
+            $table->string('dosis');
+            $table->string('jumlah');
+            $table->unsignedBigInteger('pemeriksaan_id');
             $table->timestamps();
         });
     }

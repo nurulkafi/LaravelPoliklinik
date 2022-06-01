@@ -44,3 +44,11 @@ Route::resources([
     'resep' => ResepController::class,
     'riwayat_pemeriksaan' => RiwayatPemeriksaanController::class
 ]);
+
+Route::get('detail_pemeriksaan/{id}',[
+    RiwayatPemeriksaanController::class,'details'
+]);
+
+Route::get('detail_resep/{id}',[
+    ResepController::class,'detail'
+]);
