@@ -9,7 +9,7 @@
                 </a>
             </header>
             <div class="page-heading">
-                <h3>{{ $title ?? "Kafi Pedia" }}</h3>
+                <h3>Kadazi Poliklinik</h3>
             </div>
             <div class="page-content">
                 @yield('content')
@@ -20,4 +20,5 @@
 </body>
 </html>
 @include('layouts.script')
+@include('layouts.toast')
 

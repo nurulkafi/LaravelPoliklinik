@@ -4,7 +4,7 @@
     @stack('dashboard')
     <script src="{{ asset('js/script.js')}}"></script>
     <script src="{{ asset('js/main.js')}}"></script>
-    <script src="{{ asset('js/main.js')}}"></script>
-    @stack('simpleDataTable')
-    @stack('order')
+    <script src="{{ asset('vendors/toastify/toastify.js') }}"></script>
+    <script src="{{ asset('js/extensions/toastify.js') }}"></script>
+    @stack('datatable')
     @stack('simditor')

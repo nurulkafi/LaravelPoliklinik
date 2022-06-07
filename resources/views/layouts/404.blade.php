@@ -1,4 +1,4 @@
-@include('layouts.head')
+@include('admin.layouts.head')
 <body>
     <div id="error">
         <div class="error-page container">
