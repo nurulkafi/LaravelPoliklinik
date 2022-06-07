@@ -38,14 +38,14 @@
                                 <span>Pegawai</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('Orders')">
-                            <a href="{{ url('admin/order') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('poli')">
+                            <a href="{{ url('admin/poli') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-fill"></i>
                                 <span>Poliklinik</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('Orders')">
-                            <a href="{{ url('admin/order') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('obat')">
+                            <a href="{{ url('admin/obat') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-fill"></i>
                                 <span>Obat</span>
                             </a>
