@@ -24,7 +24,6 @@ class CreatePendaftaranTable extends Migration
 
             $table->foreign('pasien_id')->references('id')->on('pasien');
             $table->foreign('jadwal_dokter_id')->references('id')->on('jadwal_dokter');
-            $table->foreign('pegawai_id')->references('id')->on('pegawai');
         });
     }
 
