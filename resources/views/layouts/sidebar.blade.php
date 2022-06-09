@@ -69,8 +69,8 @@
                                 <span>Dokter</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('dokter')">
-                            <a href="{{ url('admin/dokter') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('jadwal_dokter')">
+                            <a href="{{ url('admin/jadwal_dokter') }}" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
                                 <span>Jadwal Dokter</span>
                             </a>

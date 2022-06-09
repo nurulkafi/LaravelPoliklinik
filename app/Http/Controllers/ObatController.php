@@ -41,6 +41,8 @@ class ObatController extends Controller
         $satuan = $request->satuan;
         $harga = $request->harga;
 
+        $harga = preg_replace('/[^0-9]/', '', $harga);
+
         Obat::create([
             'nama' => $nama,
             'merk' => $merk,
