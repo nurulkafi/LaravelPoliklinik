@@ -20,7 +20,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item @yield('pendaftaran')">
-                            <a href="{{ url('admin/dashboard') }}" class='sidebar-link'>
+                            <a href="{{ url('admin/pendaftaran') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Pendaftaran</span>
                             </a>
@@ -50,14 +50,14 @@
                                 <span>Obat</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('Orders')">
-                            <a href="{{ url('admin/order') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('jenis_biaya')">
+                            <a href="{{ url('admin/jenis_biaya') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-fill"></i>
                                 <span>Jenis Biaya</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('Orders')">
-                            <a href="{{ url('admin/order') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('media_pembayaran')">
+                            <a href="{{ url('admin/media_pembayaran') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-fill"></i>
                                 <span>Media Pembayaran</span>
                             </a>

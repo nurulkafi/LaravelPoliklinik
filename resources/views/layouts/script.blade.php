@@ -6,5 +6,7 @@
     <script src="{{ asset('js/main.js')}}"></script>
     <script src="{{ asset('vendors/toastify/toastify.js') }}"></script>
     <script src="{{ asset('js/extensions/toastify.js') }}"></script>
+    <script src="{{ asset('vendors/choices.js/choices.min.js') }}"></script>
+
     @stack('datatable')
     @stack('simditor')
