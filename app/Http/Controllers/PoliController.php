@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Poli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PoliController extends Controller
 {
@@ -14,7 +15,8 @@ class PoliController extends Controller
      */
     public function index()
     {
-        //
+        $data = Poli::get();
+        return view('poli.index', compact('data'));
     }
 
     /**
@@ -24,7 +26,7 @@ class PoliController extends Controller
      */
     public function create()
     {
-        //
+        return view('poli.create');
     }
 
     /**
@@ -35,7 +37,19 @@ class PoliController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'image|file|max:2048'
+        ]);
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('poli-images');
+        }
+        $validatedData['kode_poli'] = Poli::kodeOtomatis();
+        Poli::create($validatedData);
+        
+        return redirect('admin/poli')->with('message', 'Data added Successfully');
+
     }
 
     /**
@@ -55,9 +69,10 @@ class PoliController extends Controller
      * @param  \App\Models\Poli  $poli
      * @return \Illuminate\Http\Response
      */
-    public function edit(Poli $poli)
+    public function edit($id)
     {
-        //
+        $poli = Poli::where('kode_poli',$id)->first();
+        return view('poli.edit',compact('poli'));
     }
 
     /**
@@ -67,9 +82,21 @@ class PoliController extends Controller
      * @param  \App\Models\Poli  $poli
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Poli $poli)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nama' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'image|file|max:2048'
+        ]);
+        if($request->file('image')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('image')->store('poli-images');
+        }
+        Poli::where('kode_poli',$id)->update($validatedData);
+        return redirect('admin/poli')->with('message', 'Data updated Successfully');
     }
 
     /**
@@ -78,8 +105,12 @@ class PoliController extends Controller
      * @param  \App\Models\Poli  $poli
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Poli $poli)
+    public function destroy($id)
     {
-        //
+        $poli = Poli::where('kode_poli',$id);
+        $poli2 = Poli::where('kode_poli',$id)->first();
+        Storage::delete($poli2->image);
+        $poli->delete();
+        return redirect('admin/poli')->with('message', 'Data deleted Successfully');
     }
 }
