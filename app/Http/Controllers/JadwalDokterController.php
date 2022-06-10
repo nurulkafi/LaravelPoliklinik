@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalDokter;
+use App\Models\Dokter;
 use Illuminate\Http\Request;
 
 class JadwalDokterController extends Controller
@@ -14,7 +15,8 @@ class JadwalDokterController extends Controller
      */
     public function index()
     {
-        //
+        $data = JadwalDokter::get();
+        return view('jadwal_dokter.index',compact('data'));
     }
 
     /**
@@ -24,7 +26,9 @@ class JadwalDokterController extends Controller
      */
     public function create()
     {
-        //
+        return view('jadwal_dokter.create',[
+            'dokter' => Dokter::all()
+        ]);
     }
 
     /**
@@ -35,7 +39,19 @@ class JadwalDokterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hari = $request->hari;
+        $dokter = $request->dokter;
+        $jam_mulai = $request->jam_mulai;
+        $jam_selesai = $request->jam_selesai;
+
+        JadwalDokter::create([
+            'hari' => $hari,
+            'dokter_id' => $dokter,
+            'jam_mulai' => $jam_mulai,
+            'jam_selesai' => $jam_selesai
+        ]);
+        return redirect('admin/jadwal_dokter')->with('message', 'Data added Successfully');
+
     }
 
     /**
@@ -57,7 +73,10 @@ class JadwalDokterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jadwal_dokter = JadwalDokter::findOrFail($id);
+        return view('jadwal_dokter.edit',[
+            'dokter' => Dokter::all()
+        ],compact('jadwal_dokter'));
     }
 
     /**
@@ -69,7 +88,20 @@ class JadwalDokterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jadwal_dokter = JadwalDokter::findOrFail($id);
+
+        $hari = $request->hari;
+        $dokter = $request->dokter;
+        $jam_mulai = $request->jam_mulai;
+        $jam_selesai = $request->jam_selesai;
+
+        $jadwal_dokter->update([
+            'hari' => $hari,
+            'dokter_id' => $dokter,
+            'jam_mulai' => $jam_mulai,
+            'jam_selesai' => $jam_selesai
+        ]);
+        return redirect('admin/jadwal_dokter')->with('message', 'Data added Successfully');
     }
 
     /**
@@ -80,6 +112,8 @@ class JadwalDokterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jadwal_dokter = JadwalDokter::findOrFail($id);
+        $jadwal_dokter->delete();
+        return redirect('admin/jadwal_dokter')->with('message', 'Data Delete Successfully');
     }
 }
