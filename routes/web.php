@@ -5,11 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PoliController;
+use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DokterController;
+use App\Http\Controllers\JadwalDokterController;
 
 /*
 |--------------------------------------------------------------------------

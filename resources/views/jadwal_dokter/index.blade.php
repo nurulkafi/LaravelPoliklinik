@@ -1,15 +1,15 @@
 @extends('layouts.main')
-@section('dokter','active')
+@section('jadwal_dokter','active')
 @section('content')
 <div class="page-content">
     <div class="card">
         <div class="card-header">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h5>Data Dokter</h5>
+                        <h5>Data Jadwal Dokter</h5>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
-                        <a class="btn btn-primary float-start float-lg-end" href="{{ url('admin/dokter/create') }}">
+                        <a class="btn btn-primary float-start float-lg-end" href="{{ url('admin/jadwal_dokter/create') }}">
                             Tambah data
                         </a>
                     </div>
@@ -20,12 +20,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Kode Poli</th>
-                            <th>Alamat</th>
-                            <th>No HP</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Jenis Kelamin</th>
+                            <th>Nama Dokter</th>
+                            <th>Hari</th>
+                            <th>Jam Mulai</th>
+                            <th>Jam Selesai</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,14 +34,12 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->poli_id }}</td>
-                            <td>{{ $item->alamat }}</td>
-                            <td>{{ $item->no_hp }}</td>
-                            <td>{{ $item->tgl_lahir }}</td>
-                            <td>{{ $item->jenis_kelamin }}</td>
+                            <td>{{ $item->dokter->nama }}</td>
+                            <td>{{ $item->hari }}</td>
+                            <td>{{ $item->jam_mulai }}</td>
+                            <td>{{ $item->jam_selesai }}</td>
                             <td>
-                                <a class="btn btn-info" href="{{ url('admin/dokter/'.$item->id.'/edit') }}" >
+                                <a class="btn btn-info" href="{{ url('admin/jadwal_dokter/'.$item->id.'/edit') }}" >
                                     Edit
                                 </a>
                                 <button class="btn btn-danger hapusData"  type="button" data-bs-toggle="modal" data-bs-target="#primary" data-id="{{ $item->id }}">
@@ -64,7 +60,7 @@
         <div class="modal-content">
             <div class="modal-header bg-danger" id="modalheader">
                 <h5 class="modal-title white" id="myModalLabel160">
-                    Hapus Data Dokter
+                    Hapus Data Jadwal Dokter
                 </h5>
                 <button type="button" class="close"
                     data-bs-dismiss="modal" aria-label="Close">
@@ -104,7 +100,7 @@
     $(document).ready(function() {
         $('.hapusData').on('click',function () {
             const id = $(this).data('id');
-            $('#form').attr('action','dokter/'+id);
+            $('#form').attr('action','jadwal_dokter/'+id);
         });
     });
 </script>

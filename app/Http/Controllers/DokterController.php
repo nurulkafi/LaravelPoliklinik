@@ -136,7 +136,7 @@ class DokterController extends Controller
                 'user_id' => $user->id
             ]);
         }
-        return redirect('admin/dokter')->with('message', 'Data added Successfully');
+        return redirect('admin/dokter')->with('message', 'Data updated Successfully');
     }
 
     /**
@@ -153,7 +153,7 @@ class DokterController extends Controller
         $dokter->delete();
         if ($dokter) {
             $user->delete();
-            return redirect('admin/dokter')->with('message', 'Data Delete Successfully');
+            return redirect('admin/dokter')->with('message', 'Data deleted Successfully');
         }
     }
 }
