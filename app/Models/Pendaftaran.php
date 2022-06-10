@@ -9,7 +9,7 @@ class Pendaftaran extends Model
 {
     use HasFactory;
     protected $table = 'pendaftaran';
-    protected $fillable = ['pasien_id','jadwal_dokter_id','pegawai_id','tgl_pendaftaran','no_antrian'];
+    protected $fillable = ['pasien_id','jadwal_dokter_id','users_id','status','tgl_pendaftaran','no_antrian'];
 
     public function generateNoAntrian($jadwal_dokter,$tgl){
         $no_antrian = self::where('jadwal_dokter_id',$jadwal_dokter)->where('tgl_pendaftaran',$tgl)
