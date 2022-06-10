@@ -17,11 +17,13 @@ class CreatePendaftaranTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pasien_id');
             $table->unsignedBigInteger('jadwal_dokter_id');
-            $table->unsignedBigInteger('pegawai_id');
+            $table->unsignedBigInteger('users_id')->nullable();
             $table->date('tgl_pendaftaran');
             $table->integer('no_antrian');
+            $table->string('status');
             $table->timestamps();
 
+            $table->foreign('users_id')->references('id')->on('users');
             $table->foreign('pasien_id')->references('id')->on('pasien');
             $table->foreign('jadwal_dokter_id')->references('id')->on('jadwal_dokter');
         });

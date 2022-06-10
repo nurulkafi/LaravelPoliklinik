@@ -7,7 +7,12 @@ use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\JenisBiayaController;
+use App\Http\Controllers\MediaPembayaranController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PendaftaranController;
+use App\Models\MediaPembayaran;
+use App\Models\Pendaftaran;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +45,8 @@ Route::group(['middleware' => ['role:Admin']],function () {
         Route::resource('/pasien',PasienController::class);
         Route::resource('/obat',ObatController::class);
         Route::resource('/pegawai',PegawaiController::class);
+        Route::resource('/media_pembayaran', MediaPembayaranController::class);
+        Route::resource('/jenis_biaya', JenisBiayaController::class);
+        Route::resource('/pendaftaran', PendaftaranController::class);
     });
 });

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap-icons/bootstrap-icons.css')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{ asset('vendors/choices.js/choices.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/pages/error.css')}}">
     <link rel="stylesheet" href="{{ asset('vendors/toastify/toastify.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
