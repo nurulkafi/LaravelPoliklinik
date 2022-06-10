@@ -15,7 +15,7 @@ use App\Http\Controllers\PendaftaranController;
 use App\Models\MediaPembayaran;
 use App\Models\Pendaftaran;
 use App\Http\Controllers\DokterController;
-
+use App\Http\Controllers\PemeriksaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +55,6 @@ Route::group(['middleware' => ['role:Admin']],function () {
         Route::resource('/poli',PoliController::class);
         Route::resource('/dokter',DokterController::class);
         Route::resource('/jadwal_dokter',JadwalDokterController::class);
+        Route::resource('/pemeriksaan',PemeriksaanController::class);
     });
 });

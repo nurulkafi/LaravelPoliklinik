@@ -75,8 +75,8 @@
                                 <span>Jadwal Dokter</span>
                             </a>
                         </li>
-                        <li class="sidebar-item @yield('dokter')">
-                            <a href="{{ url('admin/dokter') }}" class='sidebar-link'>
+                        <li class="sidebar-item @yield('pemeriksaan')">
+                            <a href="{{ url('admin/pemeriksaan') }}" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
                                 <span>Pemeriksaan</span>
                             </a>
