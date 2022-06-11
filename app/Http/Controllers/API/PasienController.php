@@ -54,7 +54,7 @@ class PasienController extends Controller
         $userSaved = User::create([
             'name' => $nama,
             'email' => $email,
-            'password' => bcrypt($tgl_lahir)
+            'password' => bcrypt($request->password)
         ]);
 
         if($userSaved){
@@ -73,12 +73,12 @@ class PasienController extends Controller
             if ($pasienSaved) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Pasien Berhasil Disimpan!',
+                    'message' => 'Pasien Berhasil Disimpan!'
                 ], 200);
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Pasien Gagal Disimpan!',
+                    'message' => 'Pasien Gagal Disimpan!'
                 ], 401);
             }
         }

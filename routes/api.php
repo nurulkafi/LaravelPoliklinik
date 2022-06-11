@@ -7,6 +7,7 @@ use App\Http\Controllers\API\JenisBiayaController;
 use App\Http\Controllers\API\ObatController;
 use App\Http\Controllers\API\PasienController;
 use App\Http\Controllers\API\PegawaiController;
+use App\Http\Controllers\API\PembayaranController;
 use App\Http\Controllers\API\PemeriksaanController;
 use App\Http\Controllers\API\PendaftaranController;
 use App\Http\Controllers\API\PoliController;
@@ -43,7 +44,8 @@ Route::resources([
     'jenis_biaya' => JenisBiayaController::class,
     'pendaftaran' => PendaftaranController::class,
     'resep' => ResepController::class,
-    'riwayat_pemeriksaan' => RiwayatPemeriksaanController::class
+    'riwayat_pemeriksaan' => RiwayatPemeriksaanController::class,
+    'pembayaran' => PembayaranController::class
 ]);
 
 Route::get('detail_pemeriksaan/{id}',[
