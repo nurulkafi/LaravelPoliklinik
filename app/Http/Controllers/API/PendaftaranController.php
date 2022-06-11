@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pendaftaran;
+use App\Models\Poli;
 use Illuminate\Http\Request;
 
 class PendaftaranController extends Controller
@@ -27,7 +28,28 @@ class PendaftaranController extends Controller
 
     public function antri()
     {
+        $poli = Poli::get();
+        $datas = [];
         
+        foreach($poli AS $p){
+        $data = Pendaftaran::select('pendaftaran.id AS id','jadwal_dokter.jam_mulai AS jam_mulai','jadwal_dokter.jam_selesai AS jam_selesai','dokter.nama AS dokter','pendaftaran.no_antrian AS no_antrian','poli.kode_poli AS kode_poli','poli.nama AS nama_poli','dokter.poli_id','pendaftaran.tgl_pendaftaran AS tgl_pendaftaran','jadwal_dokter.hari AS hari','pendaftaran.status AS status')
+        ->join('jadwal_dokter','jadwal_dokter.id','=','pendaftaran.jadwal_dokter_id')
+        ->join('dokter','dokter.id','=','jadwal_dokter.dokter_id')
+        ->join('poli','poli.kode_poli','=','dokter.poli_id')
+        ->where('pendaftaran.status','Terdaftar')
+        ->where('dokter.poli_id',$p->kode_poli)
+        ->where('pendaftaran.tgl_pendaftaran',date('Y-m-d'))
+        ->orderBy('no_antrian','DESC')
+        ->first();
+        if($data != NULL){
+        $datas[] = $data;
+        }
+        }
+        return response([
+            'success' => true,
+            'message' => 'List Pendaftaran',
+            'data' => $datas
+        ],200);
     }
     /**
      * Show the form for creating a new resource.
