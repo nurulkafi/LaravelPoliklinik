@@ -9,6 +9,9 @@ class Poli extends Model
 {
     use HasFactory;
     protected $table = 'poli';
+    protected $primaryKey = 'kode_poli';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable =['kode_poli','nama','deskripsi','image'];
     public function kodeOtomatis()
     {

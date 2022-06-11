@@ -24,6 +24,11 @@ class PendaftaranController extends Controller
         ],200);
     }
 
+
+    public function antri()
+    {
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

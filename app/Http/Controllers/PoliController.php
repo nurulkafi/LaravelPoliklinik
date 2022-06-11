@@ -37,17 +37,18 @@ class PoliController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'image' => 'image|file|max:2048'
+        $nama = $request->nama;
+        $deskripsi = $request->deskripsi;
+        $uploadFolder = 'poli-images';
+        $image = $request->file('image');
+        $image_uploaded_path = $image->store($uploadFolder, 'public');
+
+        Poli::create([
+            'kode_poli' => Poli::kodeOtomatis(),
+            'nama' => $nama,
+            'deskripsi' => $deskripsi,
+            'image' => $uploadFolder . '/'  . basename($image_uploaded_path)
         ]);
-        if($request->file('image')){
-            $validatedData['image'] = $request->file('image')->store('poli-images');
-        }
-        $validatedData['kode_poli'] = Poli::kodeOtomatis();
-        Poli::create($validatedData);
-        
         return redirect('admin/poli')->with('message', 'Data added Successfully');
 
     }
@@ -84,19 +85,28 @@ class PoliController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'nama' => 'required',
-            'deskripsi' => 'required',
-            'image' => 'image|file|max:2048'
-        ]);
-        if($request->file('image')){
-            if($request->oldImage){
-                Storage::delete($request->oldImage);
-            }
-            $validatedData['image'] = $request->file('image')->store('poli-images');
+        $poli = Poli::where('kode_poli',$id)->first();
+        $nama = $request->nama;
+        $deskripsi = $request->deskripsi;
+
+        $uploadFolder = 'poli-images';
+        $image = $request->file('image');
+        if ($image == "") {
+            $poli->update([
+                'nama' => $nama,
+                'deskripsi' => $deskripsi,
+            ]);
+            return redirect('admin/poli')->with('message', 'Data updated Successfully');
+        }else{
+            Storage::delete('public/' . $poli->image);
+            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            $poli->update([
+                'nama' => $nama,
+                'deskripsi' => $deskripsi,
+                'image' => $uploadFolder . '/'  . basename($image_uploaded_path)
+            ]);
+            return redirect('admin/poli')->with('message', 'Data added Successfully');
         }
-        Poli::where('kode_poli',$id)->update($validatedData);
-        return redirect('admin/poli')->with('message', 'Data updated Successfully');
     }
 
     /**
