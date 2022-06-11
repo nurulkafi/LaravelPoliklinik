@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Obat;
+use App\Models\Resep;
 use Illuminate\Http\Request;
 
 class ObatController extends Controller
@@ -95,6 +96,13 @@ class ObatController extends Controller
     public function edit($id)
     {
         //
+        $resep = Resep::where('pemeriksaan_id',$id)->get();
+        $totalhargaobat = 0;
+        foreach ($resep as $key => $value) {
+            $obat = $value->obat_id;
+            $obats = Obat::findOrFail($obat);
+            $totalhargaobat = $totalhargaobat + $obats->harga * $value->jumlah;
+        }
     }
 
     /**
