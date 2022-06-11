@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DokterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DokterController as ControllersDokterController;
 use App\Http\Controllers\JadwalDokterController;
 use App\Http\Controllers\JenisBiayaController;
 use App\Http\Controllers\MediaPembayaranController;
@@ -16,7 +18,8 @@ use App\Http\Controllers\PendaftaranController;
 use App\Models\MediaPembayaran;
 use App\Models\Pendaftaran;
 use App\Http\Controllers\PemeriksaanController;
-
+use App\Models\Dokter;
+use App\Http\Controllers\PembayaranContorller;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,13 +52,13 @@ Route::group(['middleware' => ['role:Admin']],function () {
         Route::resource('/pasien',PasienController::class);
         Route::resource('/obat',ObatController::class);
         Route::resource('/pegawai',PegawaiController::class);
-
+        Route::resource('/dokter',ControllersDokterController::class);
         Route::resource('/media_pembayaran', MediaPembayaranController::class);
         Route::resource('/jenis_biaya', JenisBiayaController::class);
         Route::resource('/pendaftaran', PendaftaranController::class);
         Route::resource('/poli',PoliController::class);
-        Route::resource('/dokter',DokterController::class);
         Route::resource('/jadwal_dokter',JadwalDokterController::class);
         Route::resource('/pemeriksaan',PemeriksaanController::class);
+        Route::resource('/pembayaran',PembayaranContorller::class);
     });
 });
