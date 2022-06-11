@@ -6,7 +6,7 @@
         <div class="card-header">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h5>Edit Data Pasien</h5>
+                        <h5>Edit Data Pegawai</h5>
                     </div>
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h5>Data Akun Untuk Login</h5>

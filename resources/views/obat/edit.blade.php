@@ -32,7 +32,7 @@
                                     <label for="">Harga</label>
                                     <input type="text" name="harga" value="{{ $obat->harga_jual }}" class="form-control">
                                 </div>
-                                <div class="form-group"><button type="submit" class="btn btn-primary">Tambah</button></div>
+                                <div class="form-group"><button type="submit" class="btn btn-primary">Edit</button></div>
                             </div>
                         </div>
                     </form>
