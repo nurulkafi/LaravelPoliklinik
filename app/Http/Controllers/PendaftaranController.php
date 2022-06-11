@@ -47,7 +47,7 @@ class PendaftaranController extends Controller
             'no_antrian' => $no_antrian,
             'status' => "Terdaftar"
         ]);
-        return redirect('admin/pendaftaran/'.$saved->id);
+        return redirect('admin/pendaftaran');
     }
     public function show($id){
         $data = Pendaftaran::findOrFail($id);
