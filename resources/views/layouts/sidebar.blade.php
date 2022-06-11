@@ -65,6 +65,12 @@
                                 <span>Media Pembayaran</span>
                             </a>
                         </li>
+                        <li class="sidebar-item @yield('pembayaran')">
+                            <a href="{{ url('admin/pembayaran') }}" class='sidebar-link'>
+                                <i class="bi bi-wallet2"></i>
+                                <span>Pembayaran</span>
+                            </a>
+                        </li>
                         <li class="sidebar-title">Dokter</li>
                         <li class="sidebar-item @yield('dokter')">
                             <a href="{{ url('admin/dokter') }}" class='sidebar-link'>

@@ -96,7 +96,7 @@ class DokterController extends Controller
         ->join('pasien','pasien.id','=','pendaftaran.pasien_id')
         ->join('pemeriksaan','pemeriksaan.pendaftaran_id','=','pendaftaran.id')
         ->where('dokter.id',$id)
-        ->where('pendaftaran.status','=','Sudah di periksa')
+        ->where('pendaftaran.status','=','Sudah Diperiksa')
         ->get();
         return view('dokter.show',compact('data','data2'));
     }

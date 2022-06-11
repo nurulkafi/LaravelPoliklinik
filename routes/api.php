@@ -59,3 +59,7 @@ Route::get('detail_resep/{id}',[
 Route::get('details_resep/{id}',[
     ResepController::class,'details'
 ]);
+
+Route::get('antrian_daftar',[
+    PendaftaranController::class,'antri'
+]);
