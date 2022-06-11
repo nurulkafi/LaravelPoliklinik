@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Poli;
 use App\Models\User;
 use App\Models\Dokter;
+use App\Models\Pasien;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
 class DokterController extends Controller
@@ -78,9 +80,25 @@ class DokterController extends Controller
      * @param  \App\Models\Dokter  $dokter
      * @return \Illuminate\Http\Response
      */
-    public function show(Dokter $dokter)
+    public function show($id)
     {
-        //
+        $data = Dokter::select('dokter.id AS id','dokter.nama AS dokter','pasien.nama AS pasien','pendaftaran.status AS status','pemeriksaan.keluhan AS keluhan','pemeriksaan.diagnosa AS diagnosa','pemeriksaan.perawatan AS perawatan','pemeriksaan.tindakan AS tindakan','pemeriksaan.berat_badan AS berat_badan','pemeriksaan.tensi_darah AS tensi_darah')
+        ->join('jadwal_dokter','jadwal_dokter.dokter_id','=','dokter.id')
+        ->join('pendaftaran','pendaftaran.jadwal_dokter_id','=','jadwal_dokter.id')
+        ->join('pasien','pasien.id','=','pendaftaran.pasien_id')
+        ->join('pemeriksaan','pemeriksaan.pendaftaran_id','=','pendaftaran.id')
+        ->where('dokter.id',$id)
+        ->first();
+
+        $data2 = Dokter::select('dokter.id AS id','dokter.nama AS dokter','pasien.nama AS pasien','pendaftaran.status AS status','pemeriksaan.keluhan AS keluhan','pemeriksaan.diagnosa AS diagnosa','pemeriksaan.perawatan AS perawatan','pemeriksaan.tindakan AS tindakan','pemeriksaan.berat_badan AS berat_badan','pemeriksaan.tensi_darah AS tensi_darah')
+        ->join('jadwal_dokter','jadwal_dokter.dokter_id','=','dokter.id')
+        ->join('pendaftaran','pendaftaran.jadwal_dokter_id','=','jadwal_dokter.id')
+        ->join('pasien','pasien.id','=','pendaftaran.pasien_id')
+        ->join('pemeriksaan','pemeriksaan.pendaftaran_id','=','pendaftaran.id')
+        ->where('dokter.id',$id)
+        ->where('pendaftaran.status','=','Sudah di periksa')
+        ->get();
+        return view('dokter.show',compact('data','data2'));
     }
 
     /**

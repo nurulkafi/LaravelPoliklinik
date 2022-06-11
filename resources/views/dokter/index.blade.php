@@ -43,6 +43,9 @@
                             <td>{{ $item->tgl_lahir }}</td>
                             <td>{{ $item->jenis_kelamin }}</td>
                             <td>
+                                <a class="btn btn-primary" href="{{ url('admin/dokter/'.$item->id) }}" >
+                                    Detail
+                                </a>
                                 <a class="btn btn-info" href="{{ url('admin/dokter/'.$item->id.'/edit') }}" >
                                     Edit
                                 </a>

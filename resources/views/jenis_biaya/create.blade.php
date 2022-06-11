@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('media_pembayaran','active')
+@section('jenis_biaya','active')
 @section('content')
 <div class="page-content">
     <div class="card">

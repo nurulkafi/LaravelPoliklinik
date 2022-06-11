@@ -34,7 +34,7 @@
                                     @endif
                                     <input class="form-control" name="image" type="file" id="image" onchange="previewImage()">
                                 </div>
-                                <div class="form-group"><button type="submit" class="btn btn-primary">Tambah</button></div>
+                                <div class="form-group"><button type="submit" class="btn btn-primary">Edit</button></div>
                             </div>
                         </div>
                     </form>

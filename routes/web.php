@@ -16,7 +16,6 @@ use App\Http\Controllers\MediaPembayaranController;
 use App\Http\Controllers\PendaftaranController;
 use App\Models\MediaPembayaran;
 use App\Models\Pendaftaran;
-use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PemeriksaanController;
 
 
