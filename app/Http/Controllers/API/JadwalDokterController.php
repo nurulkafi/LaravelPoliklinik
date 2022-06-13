@@ -52,18 +52,19 @@ class JadwalDokterController extends Controller
 
     }
     public function show($id){
-        $data = JadwalDokter::whereId($id);
+        $data = DB::table('jadwal_dokter')
+            ->select('dokter.nama AS dokter', 'poli.nama AS poli', 'hari', 'jam_mulai', 'jam_selesai')
+            ->join('dokter', 'dokter.id', '=', 'jadwal_dokter.dokter_id')
+            ->join('poli', 'poli.kode_poli', '=', 'dokter.poli_id')
+            ->where('poli.kode_poli', '=', $id)
+            ->get();
         if($data->count() > 0){
             return response([
                 'success' =>true,
                 'message' => 'detail jadwal',
-                'data' => $data->first()
+                'poli' => $data->first()->poli,
+                'data' => $data
             ],200);
-        }else{
-            return response([
-                'success' => false,
-                'message' => 'errors'
-            ],401);
         }
     }
     public function store(request $request){
