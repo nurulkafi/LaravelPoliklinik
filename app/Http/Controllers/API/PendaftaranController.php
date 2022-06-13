@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\JadwalDokter;
 use App\Models\Pendaftaran;
 use App\Models\Poli;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PendaftaranController extends Controller
@@ -39,7 +41,6 @@ class PendaftaranController extends Controller
         ->where('pendaftaran.status','Terdaftar')
         ->where('dokter.poli_id',$p->kode_poli)
         ->where('pendaftaran.tgl_pendaftaran',date('Y-m-d'))
-        ->orderBy('no_antrian','DESC')
         ->first();
         if($data != NULL){
         $datas[] = $data;
@@ -51,6 +52,57 @@ class PendaftaranController extends Controller
             'data' => $datas
         ],200);
     }
+
+    public function daftar($id)
+    {
+        $data = Pendaftaran::select('pendaftaran.id AS id','jadwal_dokter.jam_mulai AS jam_mulai','jadwal_dokter.jam_selesai AS jam_selesai','dokter.nama AS dokter','pendaftaran.no_antrian AS no_antrian','poli.kode_poli AS kode_poli','poli.nama AS nama_poli','dokter.poli_id','pendaftaran.tgl_pendaftaran AS tgl_pendaftaran','jadwal_dokter.hari AS hari','pendaftaran.status AS status')
+        ->join('jadwal_dokter','jadwal_dokter.id','=','pendaftaran.jadwal_dokter_id')
+        ->join('dokter','dokter.id','=','jadwal_dokter.dokter_id')
+        ->join('poli','poli.kode_poli','=','dokter.poli_id')
+        ->where('pendaftaran.pasien_id',$id)
+        ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Pendaftaran',
+            'data' => $data
+        ],200);
+    }
+
+
+
+    public function daftar_baru()
+    {
+        $mytime = Carbon::now('Asia/Jakarta');
+        $data = JadwalDokter::select('jadwal_dokter.id','jadwal_dokter.jam_mulai AS jam_mulai','jadwal_dokter.jam_selesai AS jam_selesai','dokter.nama AS dokter','poli.kode_poli AS kode_poli','poli.nama AS nama_poli','dokter.poli_id','jadwal_dokter.hari AS hari')
+        ->join('dokter','dokter.id','=','jadwal_dokter.dokter_id')
+        ->join('poli','poli.kode_poli','=','dokter.poli_id')
+        ->where('jadwal_dokter.hari',$mytime->isoFormat('dddd'))
+        ->where('jam_selesai',">", $mytime->isoFormat('H:m:s'))
+        ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Hadir',
+            'data' => $data
+        ],200);
+    }
+
+    public function pendaftaran(Request $request){
+        $id_jadwal = $request->jadwal_dokter;
+        $no_antrian = Pendaftaran::generateNoAntrian($id_jadwal,date('Y-m-d'));
+        $no_pasien = $request->no_pasien;
+        $data = Pendaftaran::create([
+            'pasien_id' => $no_pasien,
+            'jadwal_dokter_id' => $id_jadwal,
+            'tgl_pendaftaran' => date('Y-m-d'),
+            'no_antrian' => $no_antrian,
+            'status' => "Terdaftar"
+        ]);
+        return response([
+            'success' => true,
+            'message' => 'Berhasil Daftar',
+        ],200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -97,6 +149,25 @@ class PendaftaranController extends Controller
         }
     }
 
+
+    public function hapus_daftar($id)
+    {
+        //
+        $pendaftaran = Pendaftaran::findOrFail($id);
+        $pendaftaran->delete();
+
+        if($pendaftaran){
+            return response([
+                'success' => true,
+                'message' => 'Data berhasil dihapus'
+            ],200);
+        }else{
+            return response([
+                'success' => true,
+                'message' => 'Data gagal dihapus'
+            ], 401);
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -128,7 +199,7 @@ class PendaftaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
