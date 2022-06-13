@@ -61,3 +61,19 @@ Route::get('details_resep/{id}',[
 Route::get('antrian_daftar',[
     PendaftaranController::class,'antri'
 ]);
+
+Route::get('daftar/{id}',[
+    PendaftaranController::class,'daftar'
+]);
+
+Route::get('daftar_baru',[
+    PendaftaranController::class,'daftar_baru'
+]);
+
+Route::post('pendaftaran',[
+    PendaftaranController::class,'pendaftaran'
+]);
+
+Route::delete('hapus_daftar/{id}',[
+    PendaftaranController::class,'hapus_daftar'
+]);

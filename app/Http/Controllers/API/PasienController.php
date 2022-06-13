@@ -128,7 +128,6 @@ class PasienController extends Controller
     public function update(Request $request, $id)
     {
         $pasien = Pasien::findOrFail($id);
-        $user = User::findOrFail($pasien->user_id);
         //
         $nik = $request->nik;
         $nama = $request->nama;
@@ -136,23 +135,14 @@ class PasienController extends Controller
         $noHp = $request->no_hp;
         $tgl_lahir = $request->tgl_lahir;
         $jk = $request->jk;
-        $email = $request->email;
-
-        $userSaved = $user->update([
-            'name' => $nama,
-            'email' => $email,
-            'password' => bcrypt($tgl_lahir)
-        ]);
-
-        if ($userSaved) {
-            $pasienSaved = $pasien->update([
+        
+        $pasienSaved = $pasien->update([
                 'nik' => $nik,
                 'nama' => $nama,
                 'alamat' => $alamat,
                 'no_hp' => $noHp,
                 'jenis_kelamin' => $jk,
-                'tgl_lahir' => $tgl_lahir,
-                'user_id' => $user->id
+                'tgl_lahir' => $tgl_lahir
             ]);
 
             if ($pasienSaved) {
@@ -166,7 +156,6 @@ class PasienController extends Controller
                     'message' => 'Pasien Gagal Diubah!',
                 ], 401);
             }
-        }
     }
 
     /**
