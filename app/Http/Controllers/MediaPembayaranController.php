@@ -46,13 +46,15 @@ class MediaPembayaranController extends Controller
         $no_rek = $request->norek;
         $uploadFolder = 'media_pembayaran';
         $image = $request->file('image');
-        $image_uploaded_path = $image->store($uploadFolder, 'public');
+        $nama_photo = rand().$image->getClientOriginalName();
+        $image->move('images/photo_mhsw', $nama_photo);
+        $photo = 'images/photo_mhsw/' . $nama_photo;
 
         MediaPembayaran::create([
             'nama_bank' => $nama,
             'no_rekening' => $no_rek,
             'atas_nama' => $atas_nama,
-            'logo' => $uploadFolder . '/'  . basename($image_uploaded_path)
+            'logo' => $photo
         ]);
         return redirect('admin/media_pembayaran')->with('message', 'Data added Successfully');
 
@@ -99,6 +101,7 @@ class MediaPembayaranController extends Controller
 
         $uploadFolder = 'media_pembayaran';
         $image = $request->file('image');
+
         if ($image == "") {
             $media_pem->update([
                 'nama_bank' => $nama,

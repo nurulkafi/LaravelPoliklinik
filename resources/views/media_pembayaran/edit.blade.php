@@ -31,7 +31,7 @@
                                 <div class="form-group">
                                     <label for="harga">Logo Bank</label>
                                     <br>
-                                    <img id="output" src="{{ asset('storage/'.$data->logo) }}" width="100px" height="75px" class="img-thumbnail mt-2 mb-4"/>
+                                    <img id="output" src="{{ asset($data->logo) }}" width="100px" height="75px" class="img-thumbnail mt-2 mb-4"/>
                                     <input type="file" name="image"  class="form-control" accept="image/*" onchange="loadFile(event)">
                                     {{--     --}}
                                 </div>
