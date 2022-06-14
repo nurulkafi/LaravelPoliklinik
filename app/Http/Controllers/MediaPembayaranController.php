@@ -6,6 +6,7 @@ use App\Models\MediaPembayaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class MediaPembayaranController extends Controller
 {
@@ -44,11 +45,10 @@ class MediaPembayaranController extends Controller
         $nama = $request->nama;
         $atas_nama = $request->atas_nama;
         $no_rek = $request->norek;
-        $uploadFolder = 'media_pembayaran';
         $image = $request->file('image');
         $nama_photo = rand().$image->getClientOriginalName();
-        $image->move('images/photo_mhsw', $nama_photo);
-        $photo = 'images/photo_mhsw/' . $nama_photo;
+        $image->move('images/media_pembayaran', $nama_photo);
+        $photo = 'images/media_pembayaran/' . $nama_photo;
 
         MediaPembayaran::create([
             'nama_bank' => $nama,
@@ -98,8 +98,6 @@ class MediaPembayaranController extends Controller
         $nama = $request->nama;
         $atas_nama = $request->atas_nama;
         $no_rek = $request->norek;
-
-        $uploadFolder = 'media_pembayaran';
         $image = $request->file('image');
 
         if ($image == "") {
@@ -110,13 +108,16 @@ class MediaPembayaranController extends Controller
             ]);
             return redirect('admin/media_pembayaran')->with('message', 'Data added Successfully');
         }else{
-            Storage::delete('public/' . $media_pem->logo);
-            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            File::delete(public_path($media_pem->logo));
+            $nama_photo = rand() . $image->getClientOriginalName();
+            $image->move('images/media_pembayaran', $nama_photo);
+            $photo = 'images/media_pembayaran/' . $nama_photo;
+
             $media_pem->update([
                 'nama_bank' => $nama,
                 'no_rekening' => $no_rek,
                 'atas_nama' => $atas_nama,
-                'logo' => $uploadFolder . '/'  . basename($image_uploaded_path)
+                'logo' => $photo
             ]);
             return redirect('admin/media_pembayaran')->with('message', 'Data added Successfully');
         }
@@ -133,7 +134,7 @@ class MediaPembayaranController extends Controller
     {
         $data = MediaPembayaran::findOrFail($id);
         // if (\File::exists(public_path($data->logo))) {
-            Storage::delete('public/'.$data->logo);
+            File::delete(public_path($data->logo));
             $data->delete();
             return redirect('admin/media_pembayaran')->with('message', 'Data delete Successfully');
         // }
