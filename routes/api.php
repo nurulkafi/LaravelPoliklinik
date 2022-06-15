@@ -79,3 +79,7 @@ Route::post('pendaftaran',[
 Route::delete('hapus_daftar/{id}',[
     PendaftaranController::class,'hapus_daftar'
 ]);
+Route::get('pembayaran/obat/{id}',[PembayaranController::class, 'detail_obat']);
+Route::get('pembayaran/biaya/{id}', [PembayaranController::class, 'detail_biaya']);
+Route::get('media_pembayaran',[PembayaranController::class,'media_pembayaran']);
+Route::post('pembayaran',[PembayaranController::class,'update']);
