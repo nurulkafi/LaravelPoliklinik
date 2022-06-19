@@ -6,7 +6,7 @@ use App\Models\MediaPembayaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use File;
+use Illuminate\Support\Facades\File;
 
 class MediaPembayaranController extends Controller
 {
