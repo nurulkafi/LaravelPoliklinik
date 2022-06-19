@@ -36,6 +36,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/logout',[LoginController::class,'logout']);
@@ -61,4 +62,8 @@ Route::group(['middleware' => ['role:Admin']],function () {
         Route::resource('/pemeriksaan',PemeriksaanController::class);
         Route::resource('/pembayaran',PembayaranContorller::class);
     });
+});
+
+Route::get('/landing_page',function(){
+    return view('landing_page.home');
 });
