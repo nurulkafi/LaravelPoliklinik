@@ -19,6 +19,7 @@ class PembayaranController extends Controller
         $data = Pembayaran::join('pendaftaran', 'pendaftaran.id', '=', 'pembayaran.pendaftaran_id')
         ->select('pembayaran.id AS pembayaran', 'pendaftaran.id AS id', 'pendaftaran.tgl_pendaftaran AS tanggal', 'pembayaran.status AS status',)
         ->where('pendaftaran.pasien_id', $id)
+        ->orderBy('pembayaran.status','ASC')
         ->get();
         $datas = [];
         foreach ($data as $value) {
