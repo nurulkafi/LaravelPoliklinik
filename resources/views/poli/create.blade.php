@@ -24,9 +24,10 @@
                                     <input type="text" name="deskripsi" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <img class="img-preview img-fluid mb-3 col-sm-5">
-                                    <label for="formFile" class="form-label">Image</label>
-                                    <input class="form-control" name="image" type="file" onchange="previewImage()" id="image">
+                                    <label for="">Image Poli</label>
+                                    <br>
+                                    <img id="image" width="100px" height="75px" class="img-preview img-thumbnail mt-2 mb-4"/>
+                                    <input type="file" name="image"  class="form-control" accept="image/*" onchange="previewImage(event)">
                                 </div>
                                 <div class="form-group"><button type="submit" class="btn btn-primary">Tambah</button></div>
                             </div>
@@ -37,18 +38,12 @@
 </div>
 
 <script>
-    function previewImage(){
-    const image = document.querySelector('#image');
-    const imgPreview = document.querySelector('.img-preview');
-
-    imgPreview.style.display = 'block';
-
-    const oFReader = new FileReader();
-    oFReader.readAsDataURL(image.files[0]);
-
-    oFReader.onload = function(oFREvent){
-      imgPreview.src = oFREvent.target.result;
-      }
+  var previewImage = function(event) {
+    var output = document.getElementById('image');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
     }
+  };
   </script>
   @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Poli;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class PoliController extends Controller
 {
@@ -39,15 +40,16 @@ class PoliController extends Controller
     {
         $nama = $request->nama;
         $deskripsi = $request->deskripsi;
-        $uploadFolder = 'poli-images';
         $image = $request->file('image');
-        $image_uploaded_path = $image->store($uploadFolder, 'public');
+        $nama_photo = rand().$image->getClientOriginalName();
+        $image->move('images/poli', $nama_photo);
+        $photo = 'images/poli/' . $nama_photo;
 
         Poli::create([
             'kode_poli' => Poli::kodeOtomatis(),
             'nama' => $nama,
             'deskripsi' => $deskripsi,
-            'image' => $uploadFolder . '/'  . basename($image_uploaded_path)
+            'image' => $photo
         ]);
         return redirect('admin/poli')->with('message', 'Data added Successfully');
 
@@ -88,9 +90,8 @@ class PoliController extends Controller
         $poli = Poli::where('kode_poli',$id)->first();
         $nama = $request->nama;
         $deskripsi = $request->deskripsi;
-
-        $uploadFolder = 'poli-images';
         $image = $request->file('image');
+
         if ($image == "") {
             $poli->update([
                 'nama' => $nama,
@@ -98,12 +99,15 @@ class PoliController extends Controller
             ]);
             return redirect('admin/poli')->with('message', 'Data updated Successfully');
         }else{
-            Storage::delete('public/' . $poli->image);
-            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            File::delete(public_path($poli->image));
+            $nama_photo = rand().$image->getClientOriginalName();
+            $image->move('images/poli', $nama_photo);
+            $photo = 'images/poli/' . $nama_photo;
+
             $poli->update([
                 'nama' => $nama,
                 'deskripsi' => $deskripsi,
-                'image' => $uploadFolder . '/'  . basename($image_uploaded_path)
+                'image' => $photo
             ]);
             return redirect('admin/poli')->with('message', 'Data added Successfully');
         }
@@ -119,7 +123,7 @@ class PoliController extends Controller
     {
         $poli = Poli::where('kode_poli',$id);
         $poli2 = Poli::where('kode_poli',$id)->first();
-        Storage::delete($poli2->image);
+        File::delete(public_path($poli2->image));
         $poli->delete();
         return redirect('admin/poli')->with('message', 'Data deleted Successfully');
     }
