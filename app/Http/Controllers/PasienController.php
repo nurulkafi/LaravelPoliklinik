@@ -51,7 +51,7 @@ class PasienController extends Controller
         $userSaved = User::create([
                 'name' => $nama,
                 'email' => $email,
-                'password' => $password
+                'password' => bcrypt($password)
             ]);
 
         if ($userSaved) {
