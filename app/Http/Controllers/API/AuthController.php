@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pasien;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -29,10 +30,12 @@ class AuthController extends Controller
         $password = $request->password;
         $user = User::where('email',$email)->first();
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            $pasien = Pasien::where('user_id',$user->id)->first();
             return response([
                 'success' => true,
                 'message' => 'Success',
-                'id' => $user->id
+                'id' => $user->id,
+                'pasien_id' => $pasien->id
             ], 200);
         }
         return response([
