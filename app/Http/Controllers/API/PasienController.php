@@ -118,7 +118,7 @@ class PasienController extends Controller
         $pasien = Pasien::findOrFail($id);
         return response()->json([
             'success' => true,
-            'message' => 'Data Pasien Diubah!',
+            'message' => 'Data Pasien',
             'nik' => $pasien->nik,
             'nama' => $pasien->nama,
             'alamat' => $pasien->alamat,
