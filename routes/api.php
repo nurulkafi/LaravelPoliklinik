@@ -52,6 +52,10 @@ Route::get('detail_pemeriksaan/{id}',[
     RiwayatPemeriksaanController::class,'details'
 ]);
 
+Route::get('pemeriksaan_resep/{id}',[
+    RiwayatPemeriksaanController::class,'detail_resep'
+]);
+
 Route::get('detail_resep/{id}',[
     ResepController::class,'detail'
 ]);
@@ -83,3 +87,5 @@ Route::get('pembayaran/obat/{id}',[PembayaranController::class, 'detail_obat']);
 Route::get('pembayaran/biaya/{id}', [PembayaranController::class, 'detail_biaya']);
 Route::get('media_pembayaran',[PembayaranController::class,'media_pembayaran']);
 Route::post('pembayaran',[PembayaranController::class,'update']);
+
+Route::get('pasien/ubahpasien/{id}',[PasienController::class],'ubahpasien');

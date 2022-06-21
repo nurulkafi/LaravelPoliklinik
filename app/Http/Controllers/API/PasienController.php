@@ -115,7 +115,7 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -183,5 +183,21 @@ class PasienController extends Controller
             ], 401);
         }
 
+    }
+
+    public function ubahpasien($id){
+        $data = Pasien::whereId($id);
+        if ($data->count() > 0) {
+            return response([
+                'success' => true,
+                'message' => 'Edit Pasien',
+                'data' => $data->first()
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Pasien Tidak Ada',
+            ], 401);
+        }
     }
 }
