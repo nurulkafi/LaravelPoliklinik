@@ -35,6 +35,7 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Success',
                 'id' => $user->id,
+                'name' => $user->name,
                 'pasien_id' => $pasien->id
             ], 200);
         }
@@ -103,25 +104,11 @@ class AuthController extends Controller
     public function update(request $request,$id){
         //
         $user = User::find($id);
-        $name = $request->name;
         $email = $request->email;
         $password = $request->password;
         $role = $request->role;
 
-        $array = [
-            'name' =>$name,
-            'email' => $email,
-            'password' => bcrypt($password)
-        ];
-        $emailChecked =$this->validatorDataUsers($array,$id);
-        if ($emailChecked->fails()) {
-            return response([
-                'success' => false,
-                'message' => $emailChecked->errors()
-            ], 401);
-        } else {
             $saved = $user->update([
-                'name' => $name,
                 'email' => $email,
                 'password' => bcrypt($password)
             ]);
@@ -139,6 +126,4 @@ class AuthController extends Controller
                 ], 401);
             }
         }
-
-    }
 }
