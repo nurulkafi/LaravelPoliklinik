@@ -50,7 +50,7 @@ class PasienController extends Controller
         $jk = $request->jk;
         $email = $request->email;
 
-        
+
         $userSaved = User::create([
             'name' => $nama,
             'email' => $email,
@@ -115,7 +115,17 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pasien = Pasien::findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Pasien Berhasil Diubah!',
+            'nik' => $pasien->nik,
+            'nama' => $pasien->nama,
+            'alamat' => $pasien->alamat,
+            'no_hp' => $pasien->no_hp,
+            'jenis_kelamin' => $pasien->jk,
+            'tgl_lahir' => $pasien->tgl_lahir
+        ], 200);
     }
 
     /**
@@ -135,7 +145,7 @@ class PasienController extends Controller
         $noHp = $request->no_hp;
         $tgl_lahir = $request->tgl_lahir;
         $jk = $request->jk;
-        
+
         $pasienSaved = $pasien->update([
                 'nik' => $nik,
                 'nama' => $nama,
