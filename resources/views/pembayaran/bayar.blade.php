@@ -61,43 +61,86 @@
                                         </table>
                                     </div>
                                 </div>
-                            <div class="col-md-6">
                                 <form action="{{ url('admin/pembayaran/'.$id) }}" method="post">
                                     @method("PUT")
                                     {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="nama">Total Bayar</label>
-                                    <input type="text" disabled name="total_bayar" class="form-control" value="{{ $hasil }}">
+                                <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="nama">Total Bayar</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                            <input type="text" disabled name="total_bayar" id="rupiah" class="form-control">
+
+                                        </div>
+                                    </div>
+                                    @if ($data->status == "Lunas" || $data->status == "Menunggu Verifikasi Pembayaran")
+                                    <div class="form-group">
+                                        <label for="harga">Bayar</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                            <input type="text" name="lunas" disabled class="form-control" id="lunas">
+                                            <input type="hidden" name="bayar" class="form-control" id="bayar">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @if ($data->status == "Menunggu Verifikasi Pembayaran"){
+                                            <button type="submit" class="btn btn-primary">Verifikasi</button>
+                                        }
+                                        @else
+                                            <a href="{{ url('admin/pembayaran') }}" class="btn btn-primary mt-2">Kembali</a>
+                                        @endif
+                                    </div>
                                 </div>
-                                <div class="form-group">
+                                @if ($data->status == "Menunggu Verifikasi Pembayaran")
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Bukti Pembayaran</label><br>
+                                        <img src="" alt="" class="img-thumbnail">
+                                    </div>
+                                </div>
+                                @endif
+                                </div>
+                                @else
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                     <label for="harga">Bayar</label>
-                                    <input type="text" name="bayar" class="form-control bayar">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <input type="text" name="bayar" class="form-control" id="bayar">
+                                    </div>
                                 </div>
-                                <div class="form-group"><button type="submit" class="btn btn-primary">Bayar</button></div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" id="btn_bayar">Bayar</button>
+                                </div>
+                                </div>
+                                @endif
                                 </form>
-                            </div>
                         </div>
                     </form>
     </div>
 </div>
 
 <script>
-        let table1 = document.querySelector('#table1');
-    let dataTable = new simpleDatatables.DataTable(table1);
     var rupiah = document.getElementById("rupiah");
     rupiah.addEventListener("keyup", function(e) {
     // tambahkan 'Rp.' pada saat form di ketik
     // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-    rupiah.value = formatRupiah(this.value, "Rp. ");
+    rupiah.value = formatRupiah(this.value);
+    });
+    var bayar = document.getElementById("bayar");
+    bayar.addEventListener("keyup", function(e) {
+    // tambahkan 'Rp.' pada saat form di ketik
+    // gunakan fungsi formatbayar() untuk mengubah angka yang di ketik menjadi format angka
+    bayar.value = formatRupiah(this.value);
     });
 
     /* Fungsi formatRupiah */
-    function formatRupiah(angka, prefix) {
+    function formatRupiah(angka) {
     var number_string = angka.replace(/[^,\d]/g, "").toString(),
-        split = number_string.split(","),
-        sisa = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+       sisa 	= number_string.length % 3,
+	rupiah 	= number_string.substr(0, sisa),
+	ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
 
     // tambahkan titik jika yang di input sudah menjadi angka ribuan
     if (ribuan) {
@@ -105,13 +148,23 @@
         rupiah += separator + ribuan.join(".");
     }
 
-    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-    return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+    return rupiah;
     }
-    $(document).ready(function() {
-       $('.bayar').keypress(function(){
-            console.log(this.value);
+    $(document).ready(function(){
+        $("#btn_bayar").prop('disabled',true);
+        $("#rupiah").val(formatRupiah("{{ $hasil }}"));
+        $("#lunas").val(formatRupiah("{{ $hasil }}"));
+        $("#bayar").keyup(function(){
+            $("#bayar").val(formatRupiah(this.value));
+            bayar = this.value.replace( /[^0-9]/, '');
+            console.log(parseInt(bayar));
+            if (parseInt(bayar) >= parseInt("{{ $hasil }}")) {
+                $("#btn_bayar").prop('disabled',false);
+            }else{
+                $("#btn_bayar").prop('disabled',true);
+            }
         });
     });
+
 </script>
 @endsection

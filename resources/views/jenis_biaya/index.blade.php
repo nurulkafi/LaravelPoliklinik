@@ -33,7 +33,7 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $item->nama }}</td>
-                            <td>{{ $item->tarif }}</td>
+                            <td>{{ number_format($item->tarif,0,'','.') }}</td>
                             <td>
                                 <a class="btn btn-info" href="{{ url('admin/jenis_biaya/'.$item->id.'/edit') }}" >
                                     Edit

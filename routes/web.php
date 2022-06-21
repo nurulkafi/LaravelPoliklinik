@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\API\DokterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ use App\Models\Pendaftaran;
 use App\Http\Controllers\PemeriksaanController;
 use App\Models\Dokter;
 use App\Http\Controllers\PembayaranContorller;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,11 +43,11 @@ Auth::routes();
 
 Route::get('/logout',[LoginController::class,'logout']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\PendaftaranController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-Route::group(['middleware' => ['role:Admin']],function () {
+Route::group(['middleware' => ['role:Admin|Dokter|Pegawai']],function () {
     Route::prefix('/admin')->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -61,6 +63,8 @@ Route::group(['middleware' => ['role:Admin']],function () {
         Route::resource('/jadwal_dokter',JadwalDokterController::class);
         Route::resource('/pemeriksaan',PemeriksaanController::class);
         Route::resource('/pembayaran',PembayaranContorller::class);
+        Route::resource('/users',UsersController::class);
+        Route::resource('/role',RoleController::class);
     });
 });
 

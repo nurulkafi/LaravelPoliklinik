@@ -9,7 +9,7 @@
                         <h5>Data Pendaftaran</h5>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
-                        <a class="btn btn-primary btn-lg float-start float-lg-end" href="{{ url('admin/pendaftaran/create') }}">
+                        <a class="btn btn-primary float-start float-lg-end" href="{{ url('admin/pendaftaran/create') }}">
                             Tambah Pendaftaran
                         </a>
                     </div>

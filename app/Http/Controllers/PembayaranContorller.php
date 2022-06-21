@@ -19,7 +19,7 @@ class PembayaranContorller extends Controller
         ->join('pasien','pasien.id','=','pendaftaran.pasien_id')
         ->get();
 
-        
+
         return view('pembayaran.index',compact('data'));
     }
 
@@ -65,9 +65,9 @@ class PembayaranContorller extends Controller
         ->join('obat','obat.id','=','resep.obat_id')
         ->where('pembayaran.id',$id)
         ->get();
-
+        $data = Pembayaran::findOrFail($id);
         $total = 0;
-        
+
         foreach($harga_obat as $hb){
             $total = $total + $hb->harga * $hb->jumlah;
         }
@@ -77,7 +77,7 @@ class PembayaranContorller extends Controller
         }
         $hasil = $total_jenis + $total;
 
-        return view('pembayaran.bayar',compact('hasil','harga_obat','jenis_biaya','id'));
+        return view('pembayaran.bayar',compact('hasil','harga_obat','jenis_biaya','id','data'));
     }
 
     /**

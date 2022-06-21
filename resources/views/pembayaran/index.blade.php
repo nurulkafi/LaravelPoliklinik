@@ -6,7 +6,7 @@
         <div class="card-header">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h5>Data Pemeriksaan</h5>
+                        <h5>Data Pembayaran</h5>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,6 @@
                         @php
                             $no = 1;
                         @endphp
-                        <tr>
                             @foreach ($data as $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
@@ -34,9 +33,19 @@
                                 <td><span class="badge rounded-pill bg-info">
                                     {{ $item->status }}</span></td>
                                 <td>
-                                <a class="btn btn-success btn-sm hapusData" href="{{ url('admin/pembayaran',$item->id) }}">
-                                    Bayar
-                                </a>
+                                @if ($item->status == "Lunas")
+                                    <a class="btn btn-success btn-sm" href="{{ url('admin/pembayaran',$item->id) }}">
+                                        Lihat
+                                    </a>
+                                @elseif($item->status == "Menunggu Verifikasi Pembayaran")
+                                    <a class="btn btn-success btn-sm" href="{{ url('admin/pembayaran',$item->id) }}">
+                                        Verfikasi
+                                    </a>
+                                @else
+                                    <a class="btn btn-success btn-sm hapusData" href="{{ url('admin/pembayaran',$item->id) }}">
+                                        Bayar
+                                    </a>
+                                @endif
                                 </td>
                             </tr>
                             @endforeach
