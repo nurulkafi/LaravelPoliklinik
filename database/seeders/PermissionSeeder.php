@@ -58,7 +58,16 @@ class PermissionSeeder extends Seeder
             'pegawai-list',
             'pegawai-create',
             'pegawai-edit',
-            'pegawai-delete'
+            'pegawai-delete',
+            'media-pembayaran-list',
+            'media-pembayaran-create',
+            'media-pembayaran-edit',
+            'media-pembayaran-delete',
+            'pembayaran-list',
+            'pembayaran-create',
+            'pembayaran-edit',
+            'pembayaran-delete',
+            'dashboard'
         ];
 
         foreach ($permissions as $permission) {

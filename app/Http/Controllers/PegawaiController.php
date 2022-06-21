@@ -113,7 +113,7 @@ class PegawaiController extends Controller
         $userSaved = $user->update([
                 'name' => $nama,
                 'email' => $email,
-                'password' => $password
+                'password' => bcrypt($password)
             ]);
 
         if ($userSaved) {

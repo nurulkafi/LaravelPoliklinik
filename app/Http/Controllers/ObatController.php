@@ -92,7 +92,7 @@ class ObatController extends Controller
         $merk = $request->merk;
         $satuan = $request->satuan;
         $harga = $request->harga;
-
+        $harga = preg_replace('/[^0-9]/', '', $harga);
         $obat->update([
             'nama' => $nama,
             'merk' => $merk,

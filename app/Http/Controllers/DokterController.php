@@ -54,7 +54,7 @@ class DokterController extends Controller
         $userSaved = User::create([
             'name' => $nama,
             'email' => $email,
-            'password' => $password
+            'password' => bcrypt($password)
         ]);
 
         if ($userSaved) {
@@ -140,7 +140,7 @@ class DokterController extends Controller
         $userSaved = $user->update([
             'name' => $nama,
             'email' => $email,
-            'password' => $password
+            'password' => bcrypt($password)
         ]);
 
         if ($userSaved) {

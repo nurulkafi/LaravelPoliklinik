@@ -28,7 +28,8 @@ class PemeriksaanController extends Controller
             ->join('poli', 'poli.kode_poli', '=', 'dokter.poli_id')
             ->join('pasien', 'pasien.id', '=', 'pendaftaran.pasien_id')
             ->orderBy('tgl_pendaftaran', 'DESC')
-            // ->where('dokter.user_id',Auth::id())
+            ->where('dokter.user_id',Auth::id())
+            ->where('pendaftaran.status','!=','Sudah Diperiksa')
             ->get();
         return view('pemeriksaan.index',compact('data'));
 
@@ -65,8 +66,6 @@ class PemeriksaanController extends Controller
             exit("0 tahun 0 bulan 0 hari");
         }
         $y = $today->diff($birthDate)->y;
-        $m = $today->diff($birthDate)->m;
-        $d = $today->diff($birthDate)->d;
         return $y;
     }
     /**
@@ -121,7 +120,7 @@ class PemeriksaanController extends Controller
         $jumlah = $request->jumlah;
         $perawatan = $request->perawatan;
         $tindakan = $request->tindakan;
-        
+
 
         $pemeriksaan = Pemeriksaan::create([
             'pendaftaran_id' => $id,

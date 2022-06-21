@@ -25,8 +25,20 @@ class LoginController extends Controller
      * Where to redirect users after login.
      *
      * @var string
+     *
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+
+
+    protected function redirectTo()
+    {
+        $user = \Auth::user();
+        if(!$user->hasRole("Admin|Pegawai")){
+            return 'admin/pemeriksaan';
+        }else{
+            return '/home';
+        }
+
+    }
 
     /**
      * Create a new controller instance.
@@ -36,6 +48,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
     }
     public function logout()
     {

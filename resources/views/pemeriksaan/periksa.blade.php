@@ -26,6 +26,7 @@
                                         <input type="text" id="usia" disabled value="{{ $umur." Tahun" }}" name="no_pasien" class="form-control disable" placeholder="Masukan No Pasien">
                                     </div>
                                 </div>
+                                @if ($data2->count() > 0)
                                 <div class="float-start mb-2">
                                     <span class="badge  bg-info">Riwayat Pemeriksaan Pasien</span>
                                 </div>
@@ -60,6 +61,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                @endif
                             </div>
                             <hr>
                             <div class="col-md-6">
@@ -92,7 +94,7 @@
                                 <div class="form-group"><button type="submit" class="btn btn-primary">Tambah</button></div>
                             </div>
                             <div class="col-md-6">
-                                
+
                                 <div class="float-start">
                                     <span class="badge bg-info">Jenis Tindakan Pemeriksaan</span>
                                 </div>
@@ -216,7 +218,7 @@
                             <td>
                                 <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
                                 <i class="bx bx-check d-block d-sm-none"></i>
-                                <span class="d-none d-sm-block pilih_obat" id="pilih_obat">Pilih</span>
+                                <span class="d-none d-sm-block pilih_obat" id="pilih_obat">Simpan</span>
                                 </button>
                             </td>
                         </tr>

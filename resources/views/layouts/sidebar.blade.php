@@ -12,32 +12,47 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">General</li>
+                        @role('Pegawai|Admin')
+                            <li class="sidebar-title">General</li>
+                        @else
+                        @endrole
+                        {{-- @can('dashboard')
                         <li class="sidebar-item @yield('Dashboard')">
                             <a href="{{ url('admin/dashboard') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
+                        @endcan --}}
+                        @can('pendaftaran-list')
                         <li class="sidebar-item @yield('pendaftaran')">
                             <a href="{{ url('admin/pendaftaran') }}" class='sidebar-link'>
                                 <i class="bi bi-list-check"></i>
                                 <span>Pendaftaran</span>
                             </a>
                         </li>
-                        <li class="sidebar-title">Master Data</li>
+                        @endcan
+                        @role('Pegawai|Admin')
+                            <li class="sidebar-title">Master Data</li>
+                        @else
+                        @endrole
+                        @can('pasien-list')
                         <li class="sidebar-item @yield('pasien')">
                             <a href="{{ url('admin/pasien') }}" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
                                 <span>Pasien</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('pegawai-list')
                         <li class="sidebar-item @yield('pegawai')">
                             <a href="{{ url('admin/pegawai') }}" class='sidebar-link'>
                                 <i class="bi bi-person-badge"></i>
                                 <span>Pegawai</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('poliklik-list')
                         <li class="sidebar-item @yield('poli')">
                             <a href="{{ url('admin/poli') }}" class='sidebar-link'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hospital" viewBox="0 0 16 16">
@@ -47,31 +62,41 @@
                                 <span>Poliklinik</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('obat-list')
                         <li class="sidebar-item @yield('obat')">
                             <a href="{{ url('admin/obat') }}" class='sidebar-link'>
                                 <i class="bi bi-droplet"></i>
                                 <span>Obat</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('jenis-biaya-list')
                         <li class="sidebar-item @yield('jenis_biaya')">
                             <a href="{{ url('admin/jenis_biaya') }}" class='sidebar-link'>
                                 <i class="bi bi-cash"></i>
                                 <span>Jenis Biaya</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('media-pembayaran-list')
                         <li class="sidebar-item @yield('media_pembayaran')">
                             <a href="{{ url('admin/media_pembayaran') }}" class='sidebar-link'>
                                 <i class="bi bi-wallet2"></i>
                                 <span>Media Pembayaran</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('pembayaran-list')
                         <li class="sidebar-item @yield('pembayaran')">
                             <a href="{{ url('admin/pembayaran') }}" class='sidebar-link'>
                                 <i class="bi bi-wallet2"></i>
                                 <span>Pembayaran</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="sidebar-title">Dokter</li>
+                        @can('dokter-list')
                         <li class="sidebar-item @yield('dokter')">
                             <a href="{{ url('admin/dokter') }}" class='sidebar-link'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
@@ -81,12 +106,16 @@
                                 <span>Dokter</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('jadwal-praktek-list')
                         <li class="sidebar-item @yield('jadwal_dokter')">
                             <a href="{{ url('admin/jadwal_dokter') }}" class='sidebar-link'>
                                 <i class="bi bi-calendar-check"></i>
                                 <span>Jadwal Dokter</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('pemeriksaan-list')
                         <li class="sidebar-item @yield('pemeriksaan')">
                             <a href="{{ url('admin/pemeriksaan') }}" class='sidebar-link'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">
@@ -95,9 +124,11 @@
                                 <span>Pemeriksaan</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('user-list')
                         <li class="sidebar-title">Manajemen Users</li>
                         <li class="sidebar-item @yield('Users')">
-                            <a href="{{ url('admin/role') }}" class='sidebar-link'>
+                            <a href="{{ url('admin/users') }}" class='sidebar-link'>
                                 <i class="bi bi-person-circle"></i>
                                 <span>Users</span>
                             </a>
@@ -108,6 +139,7 @@
                                 <span>Role</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="sidebar-item">
                             <a href="{{ url('/logout') }}" class='sidebar-link'>
                                 <i class="bi bi-arrow-left"></i>
